@@ -410,17 +410,17 @@ Two VERY important operations with discrete signals:
  Realistic AV simulation of social scenes is also difficult.
 \end{itemize}
 
-\centerimage{0.5}{figs/AV/AVLocalisation-3.png}
+\centerimage{0.5}{images/AVLocalisation-3.png}
 \end{frame}
 
 \begin{frame}{Learn to separate sounds {\small [Gao et al, ECCV 2018]}}
- \centerimage{1}{figs/AV/LearnToSeparateTeaser.png}
+ \centerimage{1}{images/LearnToSeparateTeaser.png}
  
  Given two input videos and a mixed monaural (1 mic) audio, can we separate the  signals?
 \end{frame}
 
 \begin{frame}{Learn to separate sounds (II) {\small [Gao et al, ECCV 2018]}}
- \centerimage{1}{figs/AV/LearnToSeparateArch.png}
+ \centerimage{1}{images/LearnToSeparateArch.png}
   \begin{itemize}
    \item Visual features from pre-trained ResNet.
    \item Audio features from non-negative matrix factorisation.
@@ -430,7 +430,7 @@ Two VERY important operations with discrete signals:
 \end{frame}
 
 \begin{frame}{Non-negative matrix factorisation?}
- \centerimage{0.7}{figs/AV/nmf_en.png}
+ \centerimage{0.7}{images/nmf_en.png}
  {\small [Image from \url{http://d-kitamura.net/demo-defNMF_en.html}]}
 \end{frame}
 
@@ -442,18 +442,18 @@ Two VERY important operations with discrete signals:
   \item Use vision to select the right instrument from the visual appearance.
  \end{itemize}
  
- \centerimage{1}{figs/AV/VisionToNMFSelection.png}
+ \centerimage{1}{images/VisionToNMFSelection.png}
 \end{frame}
 %
 % \begin{frame}{What if we have two microphones? {\small [Gao et al, ICCV 2019]}}
-%   \centerimage{0.6}{figs/AV/25DSoundTeaser.png}
+%   \centerimage{0.6}{images/25DSoundTeaser.png}
 %   Can we \textit{spatialise} the sound with visual guidance?
 % \end{frame}
 %
 % \begin{frame}{What if we have two microphones? (II) {\small [Gao et al, ICCV 2019]}}
 %   \begin{columns}
 %    \begin{column}{0.5\textwidth}
-%        \centerimage{1}{figs/AV/25DSoundRecordingSetup.png}
+%        \centerimage{1}{images/25DSoundRecordingSetup.png}
 %    \end{column}
 %    \begin{column}{0.5\textwidth}
 %         We need data!!!
@@ -469,7 +469,7 @@ Two VERY important operations with discrete signals:
 % \end{frame}
 %
 % \begin{frame}{What if we have two microphones? (III) {\small [Gao et al, ICCV 2019]}}
-%   \centerimage{0.8}{figs/AV/25DSoundArchitecture.png}
+%   \centerimage{0.8}{images/25DSoundArchitecture.png}
 %   Extract visual features (ResNet) and concatenate with the bottleneck of a U-Net.\\
 %   Learn \textbf{only} the U-Net.
 % \end{frame}
@@ -477,7 +477,7 @@ Two VERY important operations with discrete signals:
 % \begin{frame}{What if we have two microphones? (IV) {\small [Gao et al, ICCV 2019]}}
 % %   \begin{columns}
 % %    \begin{column}{0.5\textwidth}
-%        \centerimage{0.7}{figs/AV/25DSound-MixSeparate.png}
+%        \centerimage{0.7}{images/25DSound-MixSeparate.png}
 % %    \end{column}
 % %    \begin{column}{0.5\textwidth}
 %         Downstream task: binaural sound separation. Evaluate with the mix-and-separate strategy.
@@ -487,11 +487,11 @@ Two VERY important operations with discrete signals:
 
 \begin{frame}{Can we separate voice? (back to single microphone) {\small [Gao et al, CVPR 2021]}}
  Instruments have very different visual and audio signatures, but voices/faces have less variance.
- \centerimage{0.6}{figs/AV/VisualVoiceTeaser.png}
+ \centerimage{0.6}{images/VisualVoiceTeaser.png}
 \end{frame}
 
 \begin{frame}{Can we do that with voice? (II) {\small [Gao et al, CVPR 2021]}}
- \centerimage{0.6}{figs/AV/VisualVoiceArchitecture.png}
+ \centerimage{0.6}{images/VisualVoiceArchitecture.png}
  Similar U-Net architecture, but:
  \begin{itemize}
   \item We need to fuse face and lip features.
@@ -500,7 +500,7 @@ Two VERY important operations with discrete signals:
 \end{frame}
 
 \begin{frame}{Can we do that with voice? (III) {\small [Gao et al, CVPR 2021]}}
- \centerimage{0.9}{figs/AV/VisualVoiceFulllArch.png}
+ \centerimage{0.9}{images/VisualVoiceFulllArch.png}
 %  Similar U-Net architecture, but:
 %  \begin{itemize}
 %   \item We need to fuse face and lip features.
@@ -516,13 +516,13 @@ Two VERY important operations with discrete signals:
 %
 %   \begin{columns}
 %    \begin{column}{0.3\textwidth}
-%       \centerimage{1}{figs/AV/AVLocalisation-1.png}
+%       \centerimage{1}{images/AVLocalisation-1.png}
 %    \end{column}
 %    \begin{column}{0.3\textwidth}
-%       \centerimage{1}{figs/AV/AVLocalisation-2.png}
+%       \centerimage{1}{images/AVLocalisation-2.png}
 %    \end{column}
 %    \begin{column}{0.3\textwidth}
-%       \centerimage{1}{figs/AV/AVLocalisation-4.png}
+%       \centerimage{1}{images/AVLocalisation-4.png}
 %    \end{column}
 %  \end{columns}\vspace{3mm}
 %

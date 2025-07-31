@@ -744,7 +744,7 @@ Why is it called Deep Learning and Deep Neural Networks?
  \begin{columns}
   \begin{column}{0.5\textwidth}
   \centering
-   \includegraphics[width=0.85\textwidth]{figs/I/deeplearningprocess.png}
+   \includegraphics[width=0.85\textwidth]{images/deeplearningprocess.png}
   \end{column}
   \begin{column}{0.45\textwidth}
     \begin{enumerate}
@@ -786,8 +786,8 @@ In 2018, three top scientists received the ACM \alert{\href{https://awards.acm.o
   \item Basic component in neural circuits for complex tasks
  \end{itemize}
  \begin{center}
-  \includegraphics[width=0.5\textwidth]{figs/I/neuron.png}
-  \includegraphics[width=0.4\textwidth]{figs/I/neuron_model.jpeg}
+  \includegraphics[width=0.5\textwidth]{images/neuron.png}
+  \includegraphics[width=0.4\textwidth]{images/neuron_model.jpeg}
  \end{center}\vspace{-3mm}
  \begin{flushright}
   {\tiny Figure from \url{http://cs231n.github.io/neural-networks-1/}.}
@@ -815,7 +815,7 @@ compact input domain provided a sufficiently large number of hidden units.
    \end{itemize}}
   \end{column}
   \begin{column}{0.4\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/mlp.png}
+   \includegraphics[width=\textwidth]{images/mlp.png}
   \end{column}
  \end{columns}
 \end{frame}
@@ -830,7 +830,7 @@ compact input domain provided a sufficiently large number of hidden units.
   \item MLP Architecture can be generalized (more layers, skip-connections, etc).
   \item Feed-forward nets are restricted to directed acyclic graphs: ensures that output can be computed from the input in a single feed-forward pass.
   \begin{center}
-   \includegraphics[width=0.6\textwidth]{figs/I/feedforward.png}
+   \includegraphics[width=0.6\textwidth]{images/feedforward.png}
   \end{center}
   \item Important issues in practice
   \begin{itemize}
@@ -864,7 +864,7 @@ Recall:
    {\small $$ {\cal L} = - \sum_k t_k\log p(c_k|x), \quad t_k = 1 \text{ or } 0.$$}
   \end{column}
   \begin{column}{0.35\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/mlp.png}
+   \includegraphics[width=\textwidth]{images/mlp.png}
   \end{column}
  \end{columns}\vspace{3mm}
  Apply the chain-rule successively to ``back-propagate'' the error through the network\\ (check example in Chamilo).
@@ -883,7 +883,7 @@ Recall:
    \end{itemize}
   \end{column}
   \begin{column}{0.3\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/sigmoid-crop.pdf}
+   \includegraphics[width=\textwidth]{images/sigmoid-crop.pdf}
   \end{column}
  \end{columns}
 
@@ -897,7 +897,7 @@ Recall:
    \end{itemize}
   \end{column}
   \begin{column}{0.3\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/hyperbolictangent-crop.pdf}
+   \includegraphics[width=\textwidth]{images/hyperbolictangent-crop.pdf}
   \end{column}
  \end{columns}
 \end{frame}
@@ -914,7 +914,7 @@ Recall:
    \end{itemize}
   \end{column}
   \begin{column}{0.3\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/relu-crop.pdf}
+   \includegraphics[width=\textwidth]{images/relu-crop.pdf}
   \end{column}
  \end{columns}
 
@@ -928,7 +928,7 @@ Recall:
    \end{itemize}
   \end{column}
   \begin{column}{0.3\textwidth}
-   \includegraphics[width=\textwidth]{figs/I/leakyrelu-crop.pdf}
+   \includegraphics[width=\textwidth]{images/leakyrelu-crop.pdf}
   \end{column}
  \end{columns}
 \end{frame}
@@ -948,8 +948,8 @@ Recall:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Training feedforward neural networks (II)}
  \begin{center}
-  \includegraphics[width=0.3\textwidth]{figs/I/deeplearningprocess.png}\hspace{3mm}
-  \includegraphics[width=0.6\textwidth]{figs/I/feedforward.png}
+  \includegraphics[width=0.3\textwidth]{images/deeplearningprocess.png}\hspace{3mm}
+  \includegraphics[width=0.6\textwidth]{images/feedforward.png}
  \end{center}
   \begin{enumerate}
    \item Sample a batch of data (input-output) from the dataset.
@@ -966,14 +966,14 @@ Recall:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Motivation}
  \begin{center}
-  \includegraphics[width=0.5\textwidth]{figs/I/deepfeedforward.png}
+  \includegraphics[width=0.5\textwidth]{images/deepfeedforward.png}
  \end{center}
 Is this input representation suitable for images?
 \begin{center}
- \includegraphics[height=2cm]{figs/I/airplane1.jpg}
- \includegraphics[height=2cm]{figs/I/dog.jpg}
- \includegraphics[height=2cm]{figs/I/table.jpg}
- \includegraphics[height=2cm]{figs/I/cat.jpg}
+ \includegraphics[height=2cm]{images/airplane1.jpg}
+ \includegraphics[height=2cm]{images/dog.jpg}
+ \includegraphics[height=2cm]{images/table.jpg}
+ \includegraphics[height=2cm]{images/cat.jpg}
 \end{center}
 
 \end{frame}
@@ -992,7 +992,7 @@ Is this input representation suitable for images?
  \end{itemize}
 \end{itemize}
 \begin{center}
- \includegraphics[width=0.9\textwidth]{figs/I/aCNN.png}
+ \includegraphics[width=0.9\textwidth]{images/aCNN.png}
 \end{center}
 
 \end{frame}
@@ -1001,7 +1001,7 @@ Is this input representation suitable for images?
 \begin{frame}{2D convolutions}
 2D convolutions are linear operations:
 \begin{center}
- \includegraphics[width=0.8\textwidth]{figs/I/2d_convolution_pa3.png}
+ \includegraphics[width=0.8\textwidth]{images/2d_convolution_pa3.png}
 \end{center}
 \begin{itemize}
  \item Start from the top-left position.
@@ -1016,7 +1016,7 @@ There are many different types of convolutions: \url{http://deeplearning.net/sof
 \begin{frame}{Convolutions in ConvNets}
 In ConvNets (or CNNs), the convolution filters or kernels have {\color{blue}depth}:
 \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/cnn1.png}
+ \includegraphics[width=0.7\textwidth]{images/cnn1.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1027,7 +1027,7 @@ In ConvNets (or CNNs), the convolution filters or kernels have {\color{blue}dept
 \begin{frame}{Convolutions in ConvNets (II)}
 What is the width and height of the output image?
  \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/cnn2.png}
+ \includegraphics[width=0.7\textwidth]{images/cnn2.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1037,7 +1037,7 @@ What is the width and height of the output image?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Convolutions in ConvNets (III)}
  \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/cnn3.png}
+ \includegraphics[width=0.7\textwidth]{images/cnn3.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1047,7 +1047,7 @@ What is the width and height of the output image?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Convolutions in ConvNets (IV)}
  \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/cnn4.png}
+ \includegraphics[width=0.7\textwidth]{images/cnn4.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1057,7 +1057,7 @@ What is the width and height of the output image?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Convolutions in ConvNets (V)}
  \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/cnn5.png}
+ \includegraphics[width=0.7\textwidth]{images/cnn5.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1068,7 +1068,7 @@ What is the width and height of the output image?
 \begin{frame}{Convolutions in ConvNets (VI)}
 The filters \textbf{must} have the same depth as the input. The output depth corresponds to the number of filters.
  \begin{center}
- \includegraphics[width=0.4\textwidth]{figs/I/cnn6.png}
+ \includegraphics[width=0.4\textwidth]{images/cnn6.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1079,7 +1079,7 @@ The filters \textbf{must} have the same depth as the input. The output depth cor
 \begin{frame}{Convolutions in ConvNets (VII)}
 We can repeat the operation with a second convolutional layer.
  \begin{center}
- \includegraphics[width=0.8\textwidth]{figs/I/cnn-end.png}
+ \includegraphics[width=0.8\textwidth]{images/cnn-end.png}
 \end{center}
 \begin{flushright}
  {\footnotesize Slide from: Fei-Fei Li \& Andrej Karpathy \& Justin Johnson}
@@ -1096,7 +1096,7 @@ We can repeat the operation with a second convolutional layer.
   \item Similar to strided convolution with special non-trainable filter
  \end{itemize}
    \begin{center}
- \includegraphics[width=0.4\textwidth]{figs/I/pooling.png}
+ \includegraphics[width=0.4\textwidth]{images/pooling.png}
 \end{center}
 \end{frame}
 
@@ -1110,7 +1110,7 @@ We can repeat the operation with a second convolutional layer.
   field increases by $w-1$.
  \end{itemize}
    \begin{center}
- \includegraphics[width=0.4\textwidth]{figs/I/receptivefield.png}
+ \includegraphics[width=0.4\textwidth]{images/receptivefield.png}
 \end{center}
 \end{frame}
 
@@ -1122,7 +1122,7 @@ connected'' (FC) layers, i.e. a standard MLP
  \item FC layer connects all units in previous layer to all units in next layer
  \item Assembles all local information into global vectorial representation
 \begin{center}
- \includegraphics[width=0.9\textwidth]{figs/I/smallcnn.png}
+ \includegraphics[width=0.9\textwidth]{images/smallcnn.png}
 \end{center}
 \end{itemize}
 \end{frame}
@@ -1135,7 +1135,7 @@ connected'' (FC) layers, i.e. a standard MLP
   \item Different paths to recognise the same pattern.
  \end{itemize}
 \begin{center}
- \includegraphics[width=0.9\textwidth]{figs/I/dropout.png}
+ \includegraphics[width=0.9\textwidth]{images/dropout.png}
 \end{center}
 \end{frame}
 
@@ -1170,7 +1170,7 @@ connected'' (FC) layers, i.e. a standard MLP
  \end{itemize}
  \end{itemize}
 \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/alexnet.png}
+ \includegraphics[width=0.7\textwidth]{images/alexnet.png}
 \end{center}
 \end{frame}
 
@@ -1181,7 +1181,7 @@ connected'' (FC) layers, i.e. a standard MLP
   \item Only small $3\times3$ filters (rather than 11 in AlexNet). Same receptive field, less parameters per layer, better learned. About 140 million parameters.
  \end{itemize}
 \begin{center}
- \includegraphics[width=0.7\textwidth]{figs/I/vgg.png}
+ \includegraphics[width=0.7\textwidth]{images/vgg.png}
 \end{center}
 \end{frame}
 
@@ -1194,7 +1194,7 @@ connected'' (FC) layers, i.e. a standard MLP
   \item Intermediate loss functions to improve training.
  \end{itemize}
 \begin{center}
- \includegraphics[width=\textwidth]{figs/I/googlenet.png}
+ \includegraphics[width=\textwidth]{images/googlenet.png}
 \end{center}
 \end{frame}
 
@@ -1202,7 +1202,7 @@ connected'' (FC) layers, i.e. a standard MLP
 \begin{frame}{Res(idual)Net CNN (2015)}
 \begin{columns}
  \begin{column}{0.2\textwidth}
-  \includegraphics[width=\textwidth]{figs/I/resnet.png}
+  \includegraphics[width=\textwidth]{images/resnet.png}
  \end{column}
  \begin{column}{0.6\textwidth}
    \begin{itemize}
@@ -1211,7 +1211,7 @@ connected'' (FC) layers, i.e. a standard MLP
   \item Residual block does not require intermediate losses.
  \end{itemize}
 \begin{center}
- \includegraphics[width=0.5\textwidth]{figs/I/residualmodule.png}
+ \includegraphics[width=0.5\textwidth]{images/residualmodule.png}
 \end{center}
  \end{column}
 \end{columns}
@@ -1226,7 +1226,7 @@ connected'' (FC) layers, i.e. a standard MLP
   \item Skip connections allow to transfer information from intermediate representations to the deconvolutions.
  \end{itemize}
 \begin{center}
- \includegraphics[width=0.5\textwidth]{figs/I/u-net.png}
+ \includegraphics[width=0.5\textwidth]{images/u-net.png}
 \end{center}
 \end{frame}
 
@@ -1238,14 +1238,14 @@ connected'' (FC) layers, i.e. a standard MLP
  \item Can be used to process video frames (contactenated in a cube).
 \end{itemize}
 \begin{center}
- \includegraphics[width=0.55\textwidth]{figs/I/3dconvolutions.png}
+ \includegraphics[width=0.55\textwidth]{images/3dconvolutions.png}
 \end{center}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Finetunning (pre-trained CNNs)}
   \centering
-  \includegraphics[width=0.8\textwidth]{figs/I/finetuning.png}
+  \includegraphics[width=0.8\textwidth]{images/finetuning.png}
   \begin{flushright}
    {\tiny From Yamashita et al ``Convolutional neural networks: an overview and application in radiology'' Insights into Imaging, 2018.}
   \end{flushright}
@@ -1260,7 +1260,7 @@ connected'' (FC) layers, i.e. a standard MLP
  \end{itemize}\vspace{-3mm}
 \begin{columns}
  \begin{column}{0.6\textwidth}
-    \centerimage{1}{figs/II/early-stopping.jpg}
+    \centerimage{1}{images/early-stopping.jpg}
  \end{column}
  \begin{column}{0.4\textwidth}
     \textbf{Underfit}: high training error (bias) but low parameter estimate variance.\\
@@ -1279,8 +1279,8 @@ connected'' (FC) layers, i.e. a standard MLP
  \item Training the student directly does not work!
 \end{itemize}
 
- \includegraphics[height=3.6cm]{figs/II/distillation-1.jpeg}\hspace{3mm}%
- \includegraphics[height=3.6cm]{figs/II/distillation-2.png}
+ \includegraphics[height=3.6cm]{images/distillation-1.jpeg}\hspace{3mm}%
+ \includegraphics[height=3.6cm]{images/distillation-2.png}
 \end{frame}
 
 
@@ -1290,17 +1290,17 @@ connected'' (FC) layers, i.e. a standard MLP
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{RNN: Uses}
- \only<1>{\centerimage{1}{figs/II/rnn-uses-all.png}
+ \only<1>{\centerimage{1}{images/rnn-uses-all.png}
  Sequential information -- variable length -- for input/output (or both).}%
- \only<2>{\centerimage{1}{figs/II/rnn-uses-cl.png}
+ \only<2>{\centerimage{1}{images/rnn-uses-cl.png}
  Classification/regression: one image $\leftrightarrow$ one label.}%
- \only<3>{\centerimage{1}{figs/II/rnn-uses-12m.png}
+ \only<3>{\centerimage{1}{images/rnn-uses-12m.png}
  Image captioning: one image $\leftrightarrow$ a word sequence.}%
- \only<4>{\centerimage{1}{figs/II/rnn-uses-m21.png}
+ \only<4>{\centerimage{1}{images/rnn-uses-m21.png}
  Rating assessing: one evaluation comment $\leftrightarrow$ a satisfaction score.}%
- \only<5>{\centerimage{1}{figs/II/rnn-uses-m2ma.png}
+ \only<5>{\centerimage{1}{images/rnn-uses-m2ma.png}
  Machine translation: text in language A $\leftrightarrow$ text in language B.}%
- \only<6>{\centerimage{1}{figs/II/rnn-uses-m2mb.png}
+ \only<6>{\centerimage{1}{images/rnn-uses-m2mb.png}
  Paired sequential data: predict phoneme labels over time.}%
 \end{frame}
 
@@ -1324,7 +1324,7 @@ of view spans entire sequence processed so far
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{RNN unfolding}
- \centerimage{0.7}{figs/II/rnn-unwrap.png}\vspace{-5mm}
+ \centerimage{0.7}{images/rnn-unwrap.png}\vspace{-5mm}
  \textbf{Left}: \textit{folded} representation $\rightarrow$ loops.\\
  \textbf{Right}: \textit{unfolded} representation $\Rightarrow$ we call them ``deep''.\vspace{3mm}\\
  \begin{itemize}
@@ -1337,7 +1337,7 @@ of view spans entire sequence processed so far
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{RNN training}
- \centerimage{0.7}{figs/II/rnn-unwrap.png}\vspace{-5mm}
+ \centerimage{0.7}{images/rnn-unwrap.png}\vspace{-5mm}
  \begin{itemize}
   \item Deterministic feed-forward network from inputs to outputs.
   \item Softmax can be used to map the output $\vect{h}_t$ into a discrete distribution.
