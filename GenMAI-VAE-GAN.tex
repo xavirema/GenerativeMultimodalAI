@@ -711,7 +711,7 @@ Frames are modeled independently, we need time/sequential modeling!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Probabilistic Sequential Modeling (decoder network)}
 We would like to model sequences of observations ($\bs{x}_{1:T}$) and latent variables ($\bs{z}_{1:T})$:
-\[p^{\textrm{DVAE}}_{\bs{\theta}}(\bs{x}_{1:T}, \bs{z}_{1:T}) \alert{\neq}  \prod_{t=1}^T p_{\bs{\theta}}(\bs{x}_t,\bs{z}_t) = p^{\textrm{VAE}}_{\bs{\theta}}(\bs{x}_{1:T}, \bs{z}_{1:T}).\]
+\[p^{\textsc{dvae}}_{\bs{\theta}}(\bs{x}_{1:T}, \bs{z}_{1:T}) \alert{\neq}  \prod_{t=1}^T p_{\bs{\theta}}(\bs{x}_t,\bs{z}_t) = p^{\textsc{vae}}_{\bs{\theta}}(\bs{x}_{1:T}, \bs{z}_{1:T}).\]
 \vspace{-10mm}
 \begin{columns}
  \begin{column}{0.3\textwidth}
@@ -800,10 +800,10 @@ The objective is build in the same way as VAEs, but looks different:
  \item The discriminator $D_{\bs{\phi}}$ takes an image $\bs{x}$ as input and outputs the probability that $\bs{x}$ is real.\vspace{3mm}\pause
  \item The generator and discriminator are trained jointly in a minimax game:
  \begin{align*}
-  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{BCE}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z}))
+  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{bce}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z}))
  \end{align*}
-\item The discriminator tries to correctly classify real and generated images $\mathcal{L}_{\textsc{BCE}}\downarrow$.
- \item The generator tries to fool the discriminator by generating images that look real $\mathcal{L}_{\textsc{BCE}}\uparrow$.
+\item The discriminator tries to correctly classify real and generated images $\mathcal{L}_{\textsc{bce}}\downarrow$.
+ \item The generator tries to fool the discriminator by generating images that look real $\mathcal{L}_{\textsc{bce}}\uparrow$.
 \end{itemize} 
 \end{frame}
 
@@ -821,11 +821,11 @@ The objective is build in the same way as VAEs, but looks different:
 \begin{frame}{Deeper in the formulation}
   The generator and discriminator are trained jointly in a minimax game:
   \begin{align*}
-  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{BCE}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z}))
+  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{bce}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z}))
  \end{align*}
   By writing the loss function explicitly, we have (attention to the sign change):
  \begin{align*}
-  {\color{red}\min_{\bs{\theta}} \max_{\bs{\phi}}} \; &\mathbb{E}_{\bs{x}\sim p_{\text{data}}(\bs{x})}\Big[\log D_{\bs{\phi}}(\bs{x})\Big] + \mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\log(1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z})))\Big]\\
+  {\color{red}\min_{\bs{\theta}} \max_{\bs{\phi}}} \; &\mathbb{E}_{\bs{x}\sim p_{\textsc{bce}}(\bs{x})}\Big[\log D_{\bs{\phi}}(\bs{x})\Big] + \mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\log(1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z})))\Big]\\
   &\text{where } p_{\bs{z}}(\bs{z}) \text{ is a simple distribution (e.g.\ uniform or Gaussian).}
  \end{align*}
 \end{frame}
@@ -833,8 +833,8 @@ The objective is build in the same way as VAEs, but looks different:
 \begin{frame}{Implementation}
 The gradients for the generator and discriminator write \only<2>{(account for {\color{red} min max})}:
   \begin{align*}
-  \nabla_{\bs{\phi}} \mathcal{L}_{\textsc{BCE}} &= \only<2>{{\color{red}-}} \mathbb{E}_{\bs{x}\sim p_{\text{data}}(\bs{x})}\Big[\frac{1}{D_{\bs{\phi}}(\bs{x})}\nabla D_{\bs{\phi}}(\bs{x})\Big] \only<1>{-}\only<2>{{\color{red}+}} \mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\frac{1}{1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))}\nabla D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))\Big]\\
-  \nabla_{\bs{\theta}} \mathcal{L}_{\textsc{BCE}} &= -\mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\frac{1}{1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))}\nabla D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))\nabla G_{\bs{\theta}}(\bs{z})\Big]
+  \nabla_{\bs{\phi}} \mathcal{L}_{\textsc{bce}} &= \only<2>{{\color{red}-}} \mathbb{E}_{\bs{x}\sim p_{\textsc{}{data}}(\bs{x})}\Big[\frac{1}{D_{\bs{\phi}}(\bs{x})}\nabla D_{\bs{\phi}}(\bs{x})\Big] \only<1>{-}\only<2>{{\color{red}+}} \mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\frac{1}{1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))}\nabla D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))\Big]\\
+  \nabla_{\bs{\theta}} \mathcal{L}_{\textsc{bce}} &= -\mathbb{E}_{\bs{z}\sim p_{\bs{z}}(\bs{z })}\Big[\frac{1}{1 - D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))}\nabla D_{\bs{\phi}}(G_{\bs{\theta}}(\bs{z}))\nabla G_{\bs{\theta}}(\bs{z})\Big]
  \end{align*}
 Typically, GANs are trained by alternating between updating the discriminator and the generator with different batches of data:
 \begin{itemize}
@@ -846,15 +846,15 @@ Typically, GANs are trained by alternating between updating the discriminator an
 \begin{frame}{Information-theoretic interpretation of GANs}
   The minimax game between two players:
   \begin{align*}
-  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{BCE}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z})),
+  \max_{\bs{\theta}} \min_{\bs{\phi}} \; & \mathcal{L}_{\textsc{bce}}(D_{\bs{\phi}};\bs{x},G_{\bs{\theta}}(\bs{z})),
   \end{align*}
   corresponds to minimise the Jensen-Shannon divergence between $p_{\text{data}}(\bs{x})$ and $p_{\bs{\theta}}(\bs{x})$:
   \begin{align*}
-  D_{\textsc{js}}\Big(p_{\text{data}}(\bs{x}), p_{\bs{\theta}}(\bs{x})\Big) \quad \text{with optimal } \bs{\phi}.
+  D_{\textsc{js}}\Big(p_{\textsc{data}}(\bs{x}), p_{\bs{\theta}}(\bs{x})\Big) \quad \text{with optimal } \bs{\phi}.
   \end{align*}
   $D_{\text{JS}}$ writes:
   \begin{align*}
-  D_{\textsc{js}}(p,q) &= \frac{1}{2} D_{\text{KL}}\Big(p\Big\lVert \frac{p+q}{2}\Big) + \frac{1}{2} D_{\text{KL}}\Big(q\Big\lVert \frac{p+q}{2}\Big)
+  D_{\textsc{js}}(p,q) &= \frac{1}{2} D_{\textsc{kl}}\Big(p\Big\lVert \frac{p+q}{2}\Big) + \frac{1}{2} D_{\textsc{kl}}\Big(q\Big\lVert \frac{p+q}{2}\Big)
   \end{align*}\vspace{3mm}
   {\small (You don't know what to do tonight? Prove the statement above!)}
 \end{frame}
@@ -868,4 +868,241 @@ Typically, GANs are trained by alternating between updating the discriminator an
 \end{figure}
 Left: real images from MNIST dataset. Middle: generated with GAN trained with Adam. Right: generated with GAN trained with SGD.
 \end{frame}
+
+\begin{frame}{GAN training issues}
+  \begin{itemize}
+  \item GANs are very sensitive to the choice of hyper-parameters (e.g.\ learning rate, batch size).
+  \item GANs with weak discriminator can lead to a generator not producing realistic samples.
+  \item GANs with strong discriminator can lead to challenges when learning the generator or to generators replicating the training set.
+  \item GANs can suffer from mode collapse, where the generator produces a limited variety of samples, often focusing on a few modes  that \textit{fool} the discriminator.
+  \end{itemize}
+\begin{figure}
+\centering
+\includegraphics[width=0.15\textwidth]{images/mnist_real.png}\hspace{2mm}
+\includegraphics[width=0.15\textwidth]{images/mnist_sgd.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Avoiding mode collapse: Wasserstein GANs (WGANs)}
+  Motivating WGANs\footnote{Wasserstein generative adversarial networks, M. Arjovsky, C. Soumith, L. Bottou, ICML, 2017.} with a simple example: $p_{\text{data}}={\color{blue}p}$ and $p_{\bs{\theta}}={\color{red}q}$.
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/wasserstein_simple_example.png}
+  \end{figure}
+  The JS divergence is $\log 2$ (constant) and does not reflect the distance between ${\color{blue}p}$ and ${\color{red}q}$.\vspace{8mm}\\
+\end{frame}
+
+\begin{frame}{Wasserstein, earth moving, optimal transport}
+  The Wasserstein distance (or earth mover's distance) is a measure of the distance between two probability distributions. It is defined as the minimum cost of transporting mass from one distribution to another.
+  \begin{align*}
+  W(p,q) &= \inf_{\gamma\in\Gamma(p,q)} \mathbb{E}_{(\bs{x},\bs{y})\sim\gamma}\Big[\|\bs{x}-\bs{y}\|\Big]
+  \end{align*}
+  where $\Gamma(p,q)$ is the set of all joint distributions $\gamma$ with marginals $p$ and $q$.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/OT-shovel.png}\hspace{2mm}
+    \includegraphics[width=0.4\textwidth]{images/OT-graph.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Wasserstein distance properties}
+  \begin{itemize}
+  \item $W$ satisfies the triangle inequality and is sensitive to the geometry of the underlying space.
+  \item $W$ is particularly useful for comparing distributions that are not well-aligned or have different supports (as opposite to the JS divergence).
+  \item The challenge is to compute $W$ efficiently (the infimum), especially in high-dim spaces. However, there is a dual problem\footnote{Optimal Transport: Old and New, Cédric Villani Springer, 2009.} to the formulation above:
+  \end{itemize}
+  \begin{align*}
+  W(p,q) &= \inf_{\gamma\in\Gamma(p,q)} \mathbb{E}_{(\bs{x},\bs{y})\sim\gamma}\Big[\|\bs{x}-\bs{y}\|\Big] = \max_{\|f\|_L\leq 1} \Big\{\mathbb{E}_{\bs{x}\sim p}[f(\bs{x})] - \mathbb{E}_{\bs{y}\sim q}[f(\bs{y})]\Big\}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Wasserstein GANs (WGANs) formulation}
+  \begin{itemize}
+  \item WGANs use the Wasserstein distance instead of the Jensen-Shannon divergence.
+  \item WGANs use a critic $C_{\bs{\phi}}$ (instead of a discriminator $D_{\bs{\phi}}$), which is trained to approximate the Wasserstein distance.
+  \item WGANs use weight clipping to enforce a Lipschitz constraint on the critic.
+  \begin{align*}
+  \max_{\bs{\theta},\|C_{\bs{\phi}}\|_L\leq 1} \Big\{\mathbb{E}_{\bs{x}\sim p_{\textsc{data}}}[C_{\bs{\phi}}(x)] - \mathbb{E}_{\bs{z}\sim p(\bs{z})}[C_{\bs{\phi}}(G_{\bs{\theta}}(z))]\Big\}
+  \end{align*}\pause
+  \item It's not a competition anymore: the critic is trained to approximate the Wasserstein distance, while the generator is trained to minimize this distance.
+  \item In practice the Lipschitz constraint is enforced by weight clipping (e.g.\ $\|\bs{\phi}\|_{\infty}<0.01$), which limits the range of the critic's output.
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% GANs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\setbeamercolor{background canvas}{bg=mDarkTeal}
+\setbeamercolor{background canvas}{fg=white}
+\begin{frame}
+  \centering \color{white}\large\bf
+  Evaluating Generative Models
+\end{frame}
+}
+
+\begin{frame}{Why is the evaluation of generative models important and hard?}
+Important:
+  \begin{itemize}
+  \item Generative models are used in many applications, such as image synthesis, text generation, and audio synthesis.
+  \item Evaluating the quality of generated samples is crucial for understanding the performance of generative models.
+   \end{itemize}\pause
+Hard:
+  \begin{itemize}
+  \item Generative models can produce a wide range of outputs, making it challenging to define a single evaluation metric that captures all aspects of quality.
+  \item Different evaluation metrics can provide insights into different aspects of the generated samples (e.g.\ diversity, realism, fidelity).
+  \item The evaluation metrics may not align with human perception of quality.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Objective and subjective evaluation of generative models}
+  \begin{columns}
+  \begin{column}{0.45\textwidth}
+  \textbf{Objective evaluation} uses quantitative metrics to assess the quality of generated samples, such as:
+    \begin{itemize}
+    \item Inception Score (IS)
+    \item Fréchet Inception Distance (FID)
+    \item Precision and Recall
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+   \textbf{Subjective evaluation} relies on human judgment to assess the quality of generated samples, such as:
+    \begin{itemize}
+    \item User studies
+    \item Visual inspection
+    \end{itemize}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Inception Score (IS)}
+  The Inception Score (IS) is a metric that evaluates the quality of generated images based on the output of a pre-trained Inception\footnote{C. Szegedy, et al. Inception-resnet and the impact of residual connections on learning, AAAI, 2017.\vspace{-5mm}} classification model. It measures two aspects:
+  \begin{itemize}
+  \item \textbf{Diversity}: The generated images should cover a wide range of classes.
+  \item \textbf{Quality}: The generated images should be realistic and well-formed.
+  \end{itemize}
+  The IS is computed as:
+  \begin{align*}
+  \text{IS}(G_{\bs{\theta}}) &= \exp\Big(\mathbb{E}_{\bs{x}\sim p_{\bs{\theta}}(\bs{x})}\Big[D_{\textsc{kl}}(p(y|\bs{x})\|\int p(y|\bs{x})p(\bs{x}) \textrm{d}\bs{x})\Big]\Big)
+  \end{align*}
+  where $p(y|\bs{x})$ is the class distribution predicted by the Inception model.
+  \begin{itemize}
+  \item A higher IS indicates better quality and diversity of generated images.
+  \item IS is sensitive to the choice of the pre-trained model.
+  \end{itemize}\vspace{3mm}
+\end{frame} 
+
+\begin{frame}{Fréchet Inception Distance (FID)}
+  The Fréchet Inception Distance (FID) measures the Wasserstein distance between the distribution of generated images and the distribution of real images in the feature space of a pre-trained Inception model:
+  \begin{enumerate}
+  \item Extract features from real images and generated images using a pre-trained Inception model.
+  \item Compute the mean and covariance of the features of real $\mu_r$, $\Sigma_r$ and generated $\mu_g$, $\Sigma_g$ image features.
+  \item Compute the FID score using the means and covariances:
+  \begin{align*}
+  \text{FID}(G_{\bs{theta}}) &= \|\mu_r - \mu_g\|^2 + \text{Tr}(\Sigma_r + \Sigma_g - 2\sqrt{\Sigma_r\Sigma_g})
+  \end{align*}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Fréchet Inception Distance (FID)}
+  \begin{columns}
+  \begin{column}{0.45\textwidth}
+    \includegraphics[width=\textwidth]{images/FID.png}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+     \begin{itemize}
+    \item FID is more robust to mode collapse than IS.
+    \item FID is sensitive to the choice of the pre-trained model.
+    \item FID assumes that features of generated and real images follow a Gaussian distribution.
+    \end{itemize}
+  \end{column}
+  \end{columns}
+\end{frame} 
+
+\begin{frame}{Limitations of IS and FID}
+ Behind the scenes, IS and FID rely on the Inception model trained in ImageNet. This can lead to several limitations:
+  \begin{itemize}
+  \item The Inception model may not capture all aspects of image quality (trained for classification).
+  \item The Inception models has not been trained on the generated data distribution.
+  \item The choice of the pre-trained model can significantly affect the evaluation results.
+  \end{itemize}
+  Further more:
+  \begin{itemize}
+  \item IS and FID are not suitable for evaluating non-image data (e.g.\ text, audio).
+  \item They do not provide insights into the diversity or realism of generated samples.
+  \item They may not align with human perception of quality.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{User studies and visual inspection}
+  \begin{itemize}
+  \item User studies involve human participants evaluating the quality of generated samples based on specific criteria, such as realism, diversity, and relevance.
+  \item Visual inspection involves experts or users visually assessing the quality.\vspace{6mm}
+  \end{itemize}
+  \begin{columns}
+  \begin{column}{0.45\textwidth}
+  \textbf{Pros}:
+    \begin{itemize}
+    \item User studies provide valuable insights about the quality.
+    \item Visual inspection can be useful for quick assessments.
+    \item Both are complementary to objective metrics.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.45\textwidth}
+   \textbf{Cons}:
+    \begin{itemize}
+    \item Time and resource intensive.
+    \item Subjective and may vary between participants.
+    \item Some studies might need specific user expertise.
+    \end{itemize}
+  \end{column}
+  \end{columns}  
+\end{frame}
+
+\begin{frame}{Hybrid alternative: mean opinion score networks}
+  \begin{itemize}
+    \item Mean Opinion Score\footnote{Crowdmos: An approach for crowdsourcing mean opinion score studies, F. Ribeiro, et al., 2011, ICASSP.} (MOS) are a crowd-source evaluation technique where human evaluators rate the quality of generated samples on a scale (e.g.\ 1 to 5).
+  \item MOS networks are trained to predict the MOS (regression or classification).
+  \end{itemize}
+MOS vs.\ IS/FID:
+  \begin{itemize}
+  \item MOS networks are trained to estimate a subjective criteria rather than solve a classification task.
+  \item MOS networks can be used for non-image data (e.g.\ text, audio).
+  \end{itemize}
+MOS/IS/FID:
+  \begin{itemize}
+  \item They are sensible to architecture and hyper-parameters.
+  \item They are trained on a given dataset, usually NOT the generated data.
+  \end{itemize}\vspace{5mm}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% GANs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\setbeamercolor{background canvas}{bg=mDarkTeal}
+\setbeamercolor{background canvas}{fg=white}
+\begin{frame}
+  \centering \color{white}\large\bf
+  Summary
+\end{frame}
+}
+
+\begin{frame}{Summary}
+Parametric generative models:
+  \begin{itemize}
+  \item Variational AutoEncoders (VAEs) are a family of generative models that use variational inference to approximate the posterior distribution of latent variables.
+  \item Dynamical VAEs (DVAEs) extend VAEs to model sequential data by introducing temporal dependencies in the generative and inference models.
+  \end{itemize}
+Non-parametric generative models (also Normalising Flows and Diffusion Models):
+  \begin{itemize}
+  \item Generative Adversarial Networks (GANs) are a family of generative models that use adversarial training to learn a generator and a discriminator.
+  \item Wasserstein GANs (WGANs) use the Wasserstein distance to estimate the quality of generated samples and avoid mode collapse.
+  \end{itemize}
+Evaluating generative models is challenging, with objective metrics like IS and FID, and subjective metrics like user studies and MOS networks.
+\end{frame}
+
 \end{document}
+
+
+
