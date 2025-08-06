@@ -205,7 +205,7 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Classic representations
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Representing Audio Data}
+\section{Classic Audio Representations}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{The raw data}
@@ -258,17 +258,18 @@ The phone!
  Fast Fourier transform (FFT): an efficient algorithm to compute DFT when $L$ is a power of 2.
 \end{frame}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{The discrete Fourier transform (II)}
  The signal decomposes in frequencies not in time: either one or the other.\\
  \begin{figure}
   \centering
   \includegraphics[width=0.6\textwidth]{images/fourierdomain.png}
  \end{figure}
-%  Problem: we have to choose either time \textit{or} frequency.
 \end{frame}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{The short-time Fourier transform}
- STFT: segment the input signal, and apply DFT to each segment.
+ STFT: segment the input signal, and apply DFT to each segment, take the modulus.
 \begin{figure}
 \centering
 \includegraphics[width=0.6\textwidth]{images/stft.png}
@@ -277,6 +278,7 @@ The phone!
 \alert{Let's check that with a nice wav file!}
 \end{frame}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{STFT comments}
  \begin{itemize}
   \item There is a duality: (i) Represent the frequential content at a given time, (ii) Represent the evolution of a given frequency over time.
@@ -289,12 +291,381 @@ The phone!
     \end{column}
     \begin{column}{0.3\textwidth}
         \centering
-        \textcolor{red}{Let's \textit{see} STFTs!}
+        \textcolor{red}{Let's \textit{see} spectrograms!}
     \end{column}
  \end{columns}
 \end{frame}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Mel frequency scale}
+    Downside of linear frequency scale: it does not match our perception.\\
+    Higher pitch signals look more alike than lower pitch.\\
+    Hence the Mel scale (and associated Mel spectrograms):
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/Mel-scale.png}
+    \end{figure}
+\end{frame}
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{MFCC: Mel-frequency cepstral coefficients}
+A very popular audio representation (mostly for speech) are the MFCC.\\
+Here is how to compute them:
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{enumerate}
+    \item Get the raw data.
+    \item Compute the STFT.
+    \item Transform to the Mel scale.
+    \item Take the log of the values.
+    \item Compute the Discrete Cosine Transform.
+\end{enumerate}
+\end{column}
+\begin{column}{0.3\textwidth}
+\only<2>{\begin{itemize}
+\item Raw data.
+\item STFT (spectrogram)
+\item Mel spectrogram\vspace{\baselineskip}\\
+\item MFCC
+\end{itemize}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Learned representations
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Audio Representations based on SSL}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Disclaimer}
+Despite calling them \textit{learned} audio representations, some of them are based and/or use the classical audio representations.\vspace{\baselineskip}\\
+
+The advantage of using learned representations is to taylor them to a specific data and/or having more general and re-usable representations of data.
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The wav2vec 2.0 Model: Motivation}
+    \begin{itemize}
+        \item \textbf{wav2vec 2.0}\footnote{wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations. A. Baevski et al., NeurIPS 2020.} is a self-supervised learning (SSL) model for speech representations directly from raw audio.
+        \item Learns powerful features without requiring transcriptions or labels.
+        \item \textbf{Key idea:} Mask portions of the latent speech representations and train the model to predict them, similar to masked language modeling in NLP.
+        % \item Enables efficient use of unlabeled audio data for downstream tasks such as speech recognition.
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The wav2vec 2.0 Model: Architecture and Training}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/wav2vec2_architecture.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+        \item \textbf{Architecture:}
+        \begin{itemize}
+            \item Feature encoder (multi-layer CNN) processes raw waveform into latent rep.
+            \item Transformer encoder builds contextualized representations.
+        \end{itemize}
+        \item \textbf{Training:}
+        \begin{itemize}
+            \item Randomly mask a few latent rep.
+            \item Contrastive loss: predict the true latent from a set of distractors.
+            \begin{equation*}
+            \mathcal{L}=-\log\frac{\exp(\textrm{sim}(\bs{c}_t,\bs{q}_t)/\kappa)}{\sum_{\bs{q}}\exp(\textrm{sim}(\bs{c}_t,\bs{q})/\kappa)}
+            \end{equation*}
+            $\textrm{sim}$: cosine similarity, $\bs{q}$: other masked quantised representations.
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The HuBERT Model: Motivation}
+    \begin{itemize}
+        \item \textbf{HuBERT}\footnote{Hubert: Self-supervised speech representation learning by masked prediction of hidden units. W. Hsu, et al, IEEE TASLP, 2021.} (Hidden-Unit BERT) is also a speech SSL model.
+        \item Inspired by BERT in NLP, HuBERT extends wav2vec 2.0 and learns from unlabeled audio by predicting masked portions of the input.
+        \item \textbf{Key idea:} Use clustering to generate pseudo-labels for audio segments, then train a model to predict these labels from masked audio.
+        \item Fine-tuned for Automatic Speech Recognition (after the SSL pre-training).
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The HuBERT Model: Architecture and Training}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/hubert.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+        \item \textbf{Architecture:} 
+        \begin{itemize}
+            \item Feature extractor (e.g., CNN) processes raw audio.
+            \item Transformer encoder learns contextualized representations.
+        \end{itemize}
+        \item \textbf{Training:} 
+        \begin{itemize}
+            \item Iterative process: cluster features, generate pseudo-labels, train model.
+            \item Pseudo-label initialisation: MFCC (!)
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The WavLM Model: Motivation}
+    \begin{itemize}
+        \item \textbf{WavLM}\footnote{WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing. S. Chen et al., IEEE JSTSP, 2022.} is a self-supervised model for learning universal speech representations.
+        \item Extends HuBERT with more robust pre-training objectives and larger-scale training.
+        \item \textbf{Key idea:} Incorporate speech denoising as well as time/channel-wise masking in pre-training to improve robustness and generalization.
+        \item Enables strong performance on both speech recognition and speaker-related tasks (e.g., speaker verification, diarization).
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{The WavLM Model: Architecture and Training}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/wavlm_architecture.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \begin{itemize}
+        \item \textbf{Architecture:}
+        \begin{itemize}
+            \item Similar to HuBERT/wav2vec 2.0: CNN feature encoder + Transformer encoder.
+            \item Gated relative position bias (next slide).
+        \end{itemize}
+        \item \textbf{Training:}
+        \begin{itemize}
+            \item Mixes speech from multiple speakers and adds noise for denoising tasks.
+            \item Contrastive loss and denoising objectives encourage learning robust, general-purpose representations.
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Gated Relative Position Bias}
+    \textbf{Relative position bias} encode the relative distance between tokens\\ (account for local dependencies):
+        \begin{align*}
+            \text{Att}(\bs{Q}_i, \bs{K}_j, \bs{V}_j) &= \text{softmax}\left(\frac{\bs{Q}_i^\top\bs{K}_j}{\sqrt{d}} + {\color{red}b_{i, j}}\right)\bs{V}_j
+        \end{align*}
+        $b_{i, j}$ is a learnable parameter depending on the relative position between tokens $i$ and $j$.\vspace{\baselineskip}\\
+
+    \textbf{Gated relative position bias} introduces a learnable gate to control the influence of the position bias dynamically. Use $b_{i,j}^g$ in the equation above, where:
+    \begin{align*}
+        b_{i,j}^g =  (1+g_i^{\textrm{u}}+ w(1-g_i^{\textrm{u}})g_i^{\textrm{r}})b_{i,j} \qquad g_i^{\textrm{u}} = \sigma(\bs{q}_i^\top\bs{v}^{\textrm{u}}), g_i^{\textrm{r}} = \sigma(\bs{q}_i^\top\bs{v}^{\textrm{r}})
+    \end{align*}
+    where $\bs{v}^{\textrm{u}}$ and $\bs{v}^{\textrm{r}}$ are the learnable vectors for the update and reset gates, and $w$ is learnable.
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Self-Supervised Learning for Audio and Speech Representation: Summary}
+    \begin{itemize}
+        \item \textbf{Self-supervised learning (SSL)} enables learning rich audio and speech representations from large amounts of unlabeled data.
+        \item \textbf{Key points:}
+        \begin{itemize}
+            \item Architecture: CNN + transformer encoder trained with masked prediction (mask parts of the input and train the model to predict them).
+            \item Loss: contrastive or cross-entropy. Use of specific downstream task losses.
+            \item Use of classical features (e.g., MFCC) when needed.
+        \end{itemize}
+        \item \textbf{Benefits:}
+        \begin{itemize}
+            \item Reduces reliance on labeled data.
+            \item Produces representations transferable to various downstream tasks (e.g., speech recognition, speaker verification).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End-to-end approaches
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{End-to-end audio approaches}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{WaveNet: Motivation and Key Ideas}
+    \begin{itemize}
+        \item \textbf{WaveNet}\footnote{WaveNet: A Generative Model for Raw Audio. A. van den Oord et al., arXiv:1609.03499, 2016.} is a deep generative model for raw audio waveforms.
+        \item \textbf{Key idea:} Model the joint prob. of an audio waveform as a product of conditional prob.:
+        \[
+            p(s_{1:T}) = \prod_{t=1}^{T} p(s_t \mid s_1, \ldots, s_{t-1})
+        \]
+        \item Uses stacks of \textbf{dilated causal convolutions} to capture long-range dependencies.
+    \end{itemize}
+    \centering\includegraphics[width=0.3\textwidth]{images/sampling.png}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{WaveNet: Architecture and Applications}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+        \textbf{Architecture:}
+            \begin{itemize}
+                \item Causal dilated convolutions: output at time $t$ depends only on $x_{<t}$ + exponentially increase receptive field.
+                \item Gated activation units and residual connections for stable training.\\
+            \end{itemize}
+        \textbf{Applications:}
+            \begin{itemize}
+                \item High-quality TTS synthesis.
+                \item Audio generation and enhancement.
+                \item Adapted for music/other sequential data.
+            \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/wavenet_dilated_conv.png}\vspace{3mm}\\
+        \includegraphics[width=0.9\textwidth]{images/wavenet_acrh.png}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{SampleRNN: Motivation and Key Ideas}
+    \begin{itemize}
+        \item \textbf{SampleRNN}\footnote{SampleRNN: An Unconditional End-to-End Neural Audio Generation Model. Soroush Mehri et al., ICLR 2017.} is a deep generative model for raw audio, designed for unconditional audio generation.
+        \item Similar hypothesis than WaveNet:
+        \[
+            p(s_{1:T}) = \prod_{t=1}^{T} p(s_t \mid s_{<t})
+        \]
+        \item \textbf{Hierarchical structure:} Several RNN (or MLP) modules process the audio at different scales (e.g., frame-level, sample-level).
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{SampleRNN: Architecture}
+    Upper tiers summarize longer contexts; lower tiers generate fine-grained details.\vspace{3mm}\\
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/samplernn.png}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Summary \& limitations}
+    \begin{itemize}
+        \item End-to-end methods are able to model the long- and short-range dependencies of the speech/audio signal.
+        \item However, the capacity needed to generate long sequences (e.g.\ several sentences) is too high, as they need to generate too many samples.
+        \item One alternative would be to generate an intermediate representation (e.g.\ the spectrogram).
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Neural text-to-speech
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Generating audio from intermediate representations}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Generating mid-way representations}
+    To avoid generating all the raw samples, one could attempt the generation of the spectrogram frames.
+    \begin{itemize}
+        \item While the STFT is invertible, the reconstruction of the audio signal from the spectrogram is not immediate (remember $\text{Spectrogram}=|\text{STFT}|$).
+        \item In order to compute the inverse STFT, we need the \textit{phase} of the signal.\\
+        (The phase is much more complex than the modulus)
+    \end{itemize}
+Similar to the audio representation issue:
+\begin{itemize}
+    \item Classical approaches: Griffin-Lim.
+    \item Learning-based approaches: HifiGAN.
+\end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Griffin-Lim Algorithm: Motivation}
+    \begin{itemize}
+        \item When generating audio from spectrograms, we often have only the magnitude $|\text{STFT}|$ and lack the phase information.
+        \item \textbf{Griffin-Lim}\footnote{Signal estimation from modified short-time Fourier transform, D. Griffin and J. Lim, IEEE TASP, 1984.} is a classical iterative algorithm to estimate the phase and reconstruct a time-domain signal from a magnitude spectrogram.
+        \item \textbf{Intuition:} Exploit the redundancy between time-frames and between frequency bins of the STFT representation.
+        \item Widely used in classical speech synthesis and as a baseline.
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Griffin-Lim Algorithm: Procedure}
+    
+    Start with a random (or zero) phase matrix $\Phi_0$.
+    \begin{enumerate}
+        \item Combine the target magnitude $M$ with the previous phase: $S_k = M \cdot e^{i\Phi_{k-1}}$.
+        \item Compute the inverse STFT to get a time-domain signal $s_k$.
+        \item Compute the STFT of $s_k$ to get $S'_k$.
+        \item Update the phase: $\Phi_{k} = \arg(S'_k)$.
+    \end{enumerate}
+    Repeat steps 2--5 for a fixed number of iterations.\vspace{2mm}\\
+
+    \textbf{Limitation:} The reconstructed audio may sound muffled or contain artifacts, especially for few iterations or noisy/incomplete magnitude spectrograms.
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{HiFi-GAN: Motivation and Overview}
+    \begin{itemize}
+        \item \textbf{HiFi-GAN}\footnote{HiFi-GAN: Generative Adversarial Networks for Efficient and High Fidelity Speech Synthesis. J. Kong et al., NeurIPS 2020.} is a neural vocoder that generates high-fidelity audio from spectrograms.
+        \item Addresses the limitations of classical methods (e.g., Griffin-Lim) and earlier neural vocoders (e.g., WaveNet) in terms of speed and audio quality.
+        \item \textbf{Key idea:} Use a generative adversarial network (GAN) to synthesize realistic waveforms conditioned on Mel-spectrograms.
+        \item Enables real-time speech synthesis with high perceptual quality.
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{HiFi-GAN: Generator}
+        \begin{itemize}
+            \item Takes Mel-spectrogram as input, outputs raw audio.
+            \item Uses transposed convolutions and residual blocks to upsample and generate waveform samples.
+        \end{itemize}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/transposed_convolution.png}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{HiFi-GAN: Discriminator \& Loss}
+        \begin{itemize}
+            \item Multi-scale discriminators: operate at different resolutions of the waveform.
+            \item Multi-period discriminators: focus on periodic patterns in speech.
+        \end{itemize}
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/hifigan-discriminator.png}\vspace{2mm}\\
+        Trained with GAN loss, reconstruction loss, and feature loss.
+
+    \end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tacotron: Motivation and Overview}
+    \begin{itemize}
+        \item \textbf{Tacotron}\footnote{Tacotron: Towards End-to-End Speech Synthesis, Y. Wang et al., Interspeech 2017.} is an end-to-end neural network for text-to-speech (TTS) synthesis.
+        \item \textbf{Key idea:} Directly map character or phoneme sequences to Mel-spectrograms, removing the need for hand-crafted linguistic features.
+        \item Enables natural-sounding speech synthesis with minimal domain expertise.
+        \item Typically combined with a neural vocoder (e.g., WaveNet, HiFi-GAN) to generate the final waveform from the predicted spectrogram.
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tacotron: Architecture}
+    \begin{itemize}
+        \item \textbf{Encoder:} Processes input text (characters/phonemes) into a sequence of hidden representations using embedding layers and convolutional/recurrent layers.
+        \item \textbf{Attention:} Aligns encoder outputs with decoder steps, learning the mapping from text positions to audio frames.
+        \item \textbf{Decoder:} Autoregressively generates Mel-spectrogram frames, conditioned on the attention context and previous outputs.
+        \item \textbf{Training:} Simple L1 loss.
+    \end{itemize}
+    (Lots of details and tricks in the paper)
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tacotron: Architecture (II)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.75\textwidth]{images/tacotron_architecture.png}
+    \end{figure}
+    CBHG is a specific seq2seq network design: pre-net to spectrogram.
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AnCoGen}
+\color{red} DO ANCOGEN
+\end{frame}
 
 \end{document}
 
