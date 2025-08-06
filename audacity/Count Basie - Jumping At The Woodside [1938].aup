@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Count Basie - Jumping At The Woodside [1938]_data" version="1.3.0" audacityversion="2.4.2" sel0="40.4367437504" sel1="40.4367437504" selLow="7903.2817382812" selHigh="7903.2817382812" vpos="0" h="0.0000000000" zoom="59.2530401258" rate="48000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="YEAR" value="2020"/>
+		<tag name="Software" value="Lavf58.76.100"/>
+		<tag name="comment" value="https://www.youtube.com/watch?v=Ts2nQLdxoIA"/>
+		<tag name="purl" value="https://www.youtube.com/watch?v=Ts2nQLdxoIA"/>
+		<tag name="synopsis" value="Classic Mood Experience The best masterpieces ever recorded in the music history. Join our Youtube: https://goo.gl/8AOGaN  Count Basie  - Jumping At The Woodside [1938]  &quot;Jumpin&apos; at the Woodside&quot; is a song first recorded in 1938 by the Count Basie Orchestra, and considered one of the band&apos;s signature tunes. When first released it reached number 11 on the Billboard charts and remained on them for four weeks. Since then, it has become a frequently recorded jazz standard. The song was recorded on August 22, 1938 for Decca and was released on December 17 of that year. It charted as high as #11 and was on the charts for four weeks. That original 1938 recording features solos by Earle Warren (alto sax), Buck Clayton (trumpet), Lester Young (tenor sax), and Herschel Evans (clarinet). The song is considered one of the Basie band&apos;s &quot;signature&quot; tunes, a &quot;favorite&quot;, and even &quot;a definition of swing.&quot; While many liner notes credit the tune only to Basie, historians and others also credit band member Eddie Durham. Like many Basie numbers of that era, it was a &quot;head arrangement&quot; collaboratively created by the band. Sullivan indicates Durham wrote the tune in 1937 and then Basie refined it. The tune was based on earlier songs such as Jammin&apos; for the Jackpot and John&apos;s Idea. Durham had left the band by the time it was recorded. The word &quot;jumpin&quot; in the title is a triple entendre – it means lively as in &quot;the joint is jumping&quot;, a synonym for dancing or a synonym for sex.  Subscribe to our channel for the best music masterpieces: http://bit.ly/ClassicMoodExperience  Listen to the best of Classic Mood Experience: https://www.youtube.com/playlist?list=PLSdaj2Wn7snI0cPetmOp4VhjocT1GrPfA  Thank you for watching this video by Classic Mood Experience channel! Don&apos;t forget to share it and subscribe to our channel http://bit.ly/ClassicMoodExperience"/>
+		<tag name="description" value="Classic Mood Experience The best masterpieces ever recorded in the music history. Join our Youtube: https://goo.gl/8AOGaN  Count Basie  - Jumping At The Woodside [1938]  &quot;Jumpin&apos; at the Woodside&quot; is a song first recorded in 1938 by the Count Basie Orchestra, and considered one of the band&apos;s signature tunes. When first released it reached number 11 on the Billboard charts and remained on them for four weeks. Since then, it has become a frequently recorded jazz standard. The song was recorded on August 22, 1938 for Decca and was released on December 17 of that year. It charted as high as #11 and was on the charts for four weeks. That original 1938 recording features solos by Earle Warren (alto sax), Buck Clayton (trumpet), Lester Young (tenor sax), and Herschel Evans (clarinet). The song is considered one of the Basie band&apos;s &quot;signature&quot; tunes, a &quot;favorite&quot;, and even &quot;a definition of swing.&quot; While many liner notes credit the tune only to Basie, historians and others also credit band member Eddie Durham. Like many Basie numbers of that era, it was a &quot;head arrangement&quot; collaboratively created by the band. Sullivan indicates Durham wrote the tune in 1937 and then Basie refined it. The tune was based on earlier songs such as Jammin&apos; for the Jackpot and John&apos;s Idea. Durham had left the band by the time it was recorded. The word &quot;jumpin&quot; in the title is a triple entendre – it means lively as in &quot;the joint is jumping&quot;, a synonym for dancing or a synonym for sex.  Subscribe to our channel for the best music masterpieces: http://bit.ly/ClassicMoodExperience  Listen to the best of Classic Mood Experience: https://www.youtube.com/playlist?list=PLSdaj2Wn7snI0cPetmOp4VhjocT1GrPfA  Thank you for watching this video by Classic Mood Experience channel! Don&apos;t forget to share it and subscribe to our channel http://bit.ly/ClassicMoodExperience"/>
+		<tag name="TITLE" value="Count Basie - Jumping At The Woodside [1938]"/>
+		<tag name="ARTIST" value="Classic Mood Experience"/>
+	</tags>
+	<wavetrack name="Count Basie - Jumping At The Woodside [1938]" isSelected="1" height="1165" minimized="0" channel="2" linked="0" mute="0" solo="0" rate="48000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.17547292" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1932541">
+				<waveblock start="0">
+					<simpleblockfile filename="eff1ff8f.au" len="253192" min="-0.840686" max="0.768845" rms="0.136489"/>
+				</waveblock>
+				<waveblock start="253192">
+					<simpleblockfile filename="eff1f1c8.au" len="262144" min="-0.973823" max="0.913177" rms="0.136938"/>
+				</waveblock>
+				<waveblock start="515336">
+					<simpleblockfile filename="eff1faa7.au" len="262144" min="-0.971224" max="0.969453" rms="0.155861"/>
+				</waveblock>
+				<waveblock start="777480">
+					<simpleblockfile filename="eff1fb97.au" len="262144" min="-0.955447" max="0.947641" rms="0.141707"/>
+				</waveblock>
+				<waveblock start="1039624">
+					<simpleblockfile filename="eff1f838.au" len="262144" min="-1.022606" max="1.019269" rms="0.19435"/>
+				</waveblock>
+				<waveblock start="1301768">
+					<simpleblockfile filename="eff1fa42.au" len="262144" min="-1.00339" max="1.04466" rms="0.202907"/>
+				</waveblock>
+				<waveblock start="1563912">
+					<simpleblockfile filename="eff1ff66.au" len="184314" min="-0.926681" max="0.878657" rms="0.134395"/>
+				</waveblock>
+				<waveblock start="1748226">
+					<simpleblockfile filename="eff1ff7d.au" len="184315" min="-0.797931" max="0.900252" rms="0.137966"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

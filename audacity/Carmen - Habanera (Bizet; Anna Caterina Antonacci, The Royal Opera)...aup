@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Carmen - Habanera (Bizet; Anna Caterina Antonacci, The Royal Opera).._data" version="1.3.0" audacityversion="2.4.2" sel0="14.3043541667" sel1="14.3043541667" selLow="7951.4731445312" selHigh="7951.4731445312" vpos="0" h="0.0000000000" zoom="167.5014455097" rate="48000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="YEAR" value="2022"/>
+		<tag name="Software" value="Lavf58.76.100"/>
+		<tag name="comment" value="https://www.youtube.com/watch?v=5ypMs80-5ao"/>
+		<tag name="purl" value="https://www.youtube.com/watch?v=5ypMs80-5ao"/>
+		<tag name="TITLE" value="Carmen - Habanera (Bizet; Anna Caterina Antonacci, The Royal Opera).."/>
+		<tag name="ARTIST" value="Gabriel Goncalves"/>
+	</tags>
+	<wavetrack name="Carmen - Habanera (Bizet; Anna Caterina Antonacci, The Royal Opera).." isSelected="1" height="1161" minimized="0" channel="2" linked="0" mute="0" solo="0" rate="48000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="686609">
+				<waveblock start="0">
+					<simpleblockfile filename="eff1f07a.au" len="137018" min="-0.074285" max="0.06071" rms="0.017712"/>
+				</waveblock>
+				<waveblock start="137018">
+					<simpleblockfile filename="eff1f654.au" len="137019" min="-0.104643" max="0.086648" rms="0.022706"/>
+				</waveblock>
+				<waveblock start="274037">
+					<simpleblockfile filename="eff1fc53.au" len="262144" min="-0.179467" max="0.159835" rms="0.034737"/>
+				</waveblock>
+				<waveblock start="536181">
+					<simpleblockfile filename="eff1f2fb.au" len="150428" min="-0.077052" max="0.078387" rms="0.015099"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
