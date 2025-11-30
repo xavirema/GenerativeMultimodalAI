@@ -664,7 +664,27 @@ Similar to the audio representation issue:
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{AnCoGen}
-\color{red} DO ANCOGEN
+    \begin{itemize}
+        \item \textbf{AnCoGen}\footnote{AnCoGen: Analysis, Control and Generation of Speech with a Masked Autoencoder, Samir Sadok et al, ICASSP 2025.} is an masked-modeling-based model for spectrogram $\leftrightarrow$ attribute rep.
+        \item \textbf{Key idea:} Map the spectrogram to attibutes (pitch, SNR, reverberation, ...).
+        \item Enables control over the audio attributes.
+        \item Combined with a neural vocoder (HiFi-GAN) to generate the final waveform from the predicted spectrogram.
+        \item \alert{The model for Thursday's lab}.
+    \end{itemize}
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AnCoGen - The model}
+\centering
+\includegraphics[width=0.8\textwidth]{images/AnCoGen.png}\vspace{3mm}\\
+The same model is used both for spectrogram-to-attributes and for attributes-to-spectrogram.
+\end{frame}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{AnCoGen - The details}
+
+\includegraphics[width=\textwidth]{images/AnCoGen-details.png}\vspace{3mm}\\
+A VQ-VAE is a VAE with a discrete latent space. Trained with reconstruction and clustering losses. The centroids of the clusters are inpu to the transformer.
 \end{frame}
 
 \end{document}
